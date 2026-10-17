@@ -1,10 +1,12 @@
 import React from "react";
 import CoinSearch from "../components/CoinSearch";
+import Trending from "../components/Trending";
 
-function Home({coins}) {
+function Home({ coins }) {
   return (
     <div>
-      <CoinSearch coins={coins}/>
+      <CoinSearch coins={coins} />
+      <Trending />
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import { AiOutlineStar } from "react-icons/ai";
+import { Link } from "react-router-dom";
 import { Sparklines, SparklinesLine } from "react-sparklines";
 
 function CoinItem({ item }) {
@@ -10,14 +11,16 @@ function CoinItem({ item }) {
       </td>
       <td>{item.market_cap_rank}</td>
       <td>
-        <div className="flex items-center">
-          <img
-            src={item.image}
-            alt={item.id}
-            className="w-6 mr-2 rounded-full"
-          />
-          <p className="hidden sm:table-cell">{item.name}</p>
-        </div>
+        <Link to={`/coin/${item.id}`}>
+          <div className="flex items-center">
+            <img
+              src={item.image}
+              alt={item.id}
+              className="w-6 mr-2 rounded-full"
+            />
+            <p className="hidden sm:table-cell">{item.name}</p>
+          </div>
+        </Link>
       </td>
       <td>{item.symbol.toUpperCase()}</td>
       <td>${item.current_price.toLocaleString()}</td>
@@ -35,7 +38,9 @@ function CoinItem({ item }) {
       <td className="w-45 hidden md:table-cell">
         ${item.total_volume.toLocaleString()}
       </td>
-      <td className="w-45 hidden sm:table-cell">${item.market_cap.toLocaleString()}</td>
+      <td className="w-45 hidden sm:table-cell">
+        ${item.market_cap.toLocaleString()}
+      </td>
       <td>
         <Sparklines data={item.sparkline_in_7d.price}>
           <SparklinesLine color="teal" />
