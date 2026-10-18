@@ -6,7 +6,7 @@ function Signin() {
   return (
     <div>
       <div className="max-w-100 mx-auto min-h-150 px-4 py-20">
-        <h1 className="text-2xl font-bold">Signin</h1>
+        <h1 className="text-2xl font-bold">Sign In</h1>
         <form>
           <div className="my-4">
             <label>Email</label>
