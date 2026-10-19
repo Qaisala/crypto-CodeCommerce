@@ -61,6 +61,7 @@ function Navbar() {
       >
         {nav ? <AiOutlineClose size={20} /> : <AiOutlineMenu size={20} />}
       </div>
+
       {/* Mobile Menu */}
       <div
         className={
@@ -70,11 +71,11 @@ function Navbar() {
         }
       >
         <ul className="w-full p-4">
-          <li className="border-b py-6">
+          <li className="border-b py-6" onClick={() => setNav(!nav)}>
             <Link to="/">Home</Link>
           </li>
-          <li className="border-b py-6">
-            <Link to="/">Account</Link>
+          <li className="border-b py-6" onClick={() => setNav(!nav)}>
+            <Link to="/account">Account</Link>
           </li>
           <li className="py-6">
             <ThemeToggle />
@@ -82,12 +83,18 @@ function Navbar() {
         </ul>
         <div className="flex flex-col w-full p-4">
           <Link to="/signin">
-            <button className="w-full my-2 p-3 bg-primary text-text-primary border border-secondary rounded-2xl shadow-xl">
+            <button
+              className="w-full my-2 p-3 bg-primary text-text-primary border border-secondary rounded-2xl shadow-xl"
+              onClick={() => setNav(!nav)}
+            >
               Sign In
             </button>
           </Link>
           <Link to="/signup">
-            <button className="w-full my-2 p-3 bg-button text-btnText rounded-2xl shadow-xl">
+            <button
+              className="w-full my-2 p-3 bg-button text-btnText rounded-2xl shadow-xl"
+              onClick={() => setNav(!nav)}
+            >
               Sign Up
             </button>
           </Link>
