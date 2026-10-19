@@ -1,9 +1,45 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import { doc, onSnapshot, updateDoc } from "firebase/firestore";
+import { db } from "../firebase";
+import { UserAuth } from "../context/AuthContext";
 
 function SavedCoin() {
   const [coins, setCoins] = useState([]);
+  const { user } = UserAuth();
+
+  // useEffect(() => {
+  //   onSnapshot(doc(db, "users", `${user.email}`), (doc) => {
+  //     setCoins(doc.data()?.watchList);
+  //   });
+  // }, [user.email]);
+  useEffect(() => {
+    // Only run the snapshot listener if user.email exists
+    if (user?.email) {
+      const unsubscribe = onSnapshot(
+        doc(db, "users", user.email),
+        (docSnapshot) => {
+          // Fallback to an empty array if watchList doesn't exist yet
+          setCoins(docSnapshot.data()?.watchList || []);
+        },
+      );
+      return () => unsubscribe();
+    }
+  }, [user?.email]);
+
+  const deleteCoin = async (passedId) => {
+    if (!user?.email) return;
+    const coinPath = doc(db, "users", user.email);
+    try {
+      const result = coins.filter((item) => item.id !== passedId);
+      await updateDoc(coinPath, {
+        watchList: result,
+      });
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
   return (
     <div>
       {coins.length === 0 ? (
@@ -42,7 +78,10 @@ function SavedCoin() {
                   </Link>
                 </td>
                 <td className="pl-8">
-                  <AiOutlineClose className="cursor-pointer" />
+                  <AiOutlineClose
+                    className="cursor-pointer"
+                    onClick={() => deleteCoin(item.id)}
+                  />
                 </td>
               </tr>
             ))}
