@@ -13,9 +13,23 @@ const UserContext = createContext();
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
 
-  const signUp = (email, password) => {
-    createUserWithEmailAndPassword(auth, email, password);
+  //   const signUp = (email, password) => {
+  //     createUserWithEmailAndPassword(auth, email, password);
+  //     return setDoc(doc(db, "users", email), {
+  //       watchList: [],
+  //     });
+  //   };
+
+  const signUp = async (email, password) => {
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password,
+    );
+
+    // This will use the email string as the document ID instead of the UID
     return setDoc(doc(db, "users", email), {
+      email: email,
       watchList: [],
     });
   };
