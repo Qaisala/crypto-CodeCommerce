@@ -16,6 +16,7 @@ function Signup() {
     setError("");
     try {
       await signUp(email, password);
+      navigate('/account')
     } catch (e) {
       setError(e.message);
     }
